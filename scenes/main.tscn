@@ -14,7 +14,9 @@ offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("1_o5qli")
 
-[node name="Enemy" type="Sprite2D" parent="." unique_id=738648071]
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=913802812]
+
+[node name="Enemy" type="Sprite2D" parent="EnemyContainer" unique_id=738648071]
 position = Vector2(935.53485, 218.81113)
 rotation = -1.5707964
 texture = ExtResource("2_0wfyh")
@@ -22,7 +24,7 @@ region_enabled = true
 region_rect = Rect2(128, 128, 128, 128)
 script = ExtResource("4_tefeu")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Enemy" unique_id=734960937]
+[node name="RichTextLabel" type="RichTextLabel" parent="EnemyContainer/Enemy" unique_id=734960937]
 offset_left = -179.3114
 offset_top = -202.53485
 offset_right = -71.77838
