@@ -37,10 +37,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			if key_typed == next_character:
 				print("successfully typed %s" % key_typed)
 				current_letter_index += 1	
-			# Resets our enemy
-			if current_letter_index == prompt.length():
-				print("DONE!")
-				active_enemy.queue_free()
-				active_enemy = null
+				# Resets our enemy
+				if current_letter_index == prompt.length():
+					print("DONE!")
+					active_enemy.queue_free()
+					active_enemy = null
 			else:
 				print("Incorrectly typed %s instead of %s" % [key_typed, next_character])
