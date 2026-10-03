@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://ddx2d6e22wiex"]
 
-[ext_resource type="Script" uid="uid://cld78750og8jp" path="res://scenes/Main.gd" id="1_jyhfs"]
+[ext_resource type="Script" uid="uid://cld78750og8jp" path="res://Scripts/Main.gd" id="1_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://dfa8cdvaqnagj" path="res://art/world_map_bg.png" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://d325p0sgocm08" path="res://art/Zero_Spritesheet.png" id="2_0wfyh"]
 [ext_resource type="FontFile" uid="uid://csvq0vsim01d2" path="res://fonts/DotGothic16-Regular.ttf" id="4_tbgi4"]
-[ext_resource type="Script" uid="uid://0wcofa2lun4b" path="res://scenes/enemy.gd" id="4_tefeu"]
+[ext_resource type="Script" uid="uid://0wcofa2lun4b" path="res://Scripts/enemy.gd" id="4_tefeu"]
 
 [node name="Main" type="Node2D" unique_id=198978509]
 script = ExtResource("1_jyhfs")
@@ -35,7 +35,7 @@ offset_transform_rotation = 1.5707964
 theme_override_fonts/normal_font = ExtResource("4_tbgi4")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
-text = "asdf"
+text = "[center]asdf[/center]"
 fit_content = true
 scroll_active = false
 autowrap_mode = 1
