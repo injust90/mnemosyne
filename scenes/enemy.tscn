@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c02w5vdnu21bl"]
+
+[ext_resource type="Texture2D" uid="uid://d325p0sgocm08" path="res://art/Zero_Spritesheet.png" id="1_4ra3w"]
+[ext_resource type="Script" uid="uid://0wcofa2lun4b" path="res://Scripts/enemy.gd" id="2_5uy6h"]
+[ext_resource type="FontFile" uid="uid://csvq0vsim01d2" path="res://fonts/DotGothic16-Regular.ttf" id="3_c4w8v"]
+
+[node name="Enemy" type="Sprite2D" unique_id=1820329106]
+rotation = -1.5707964
+texture = ExtResource("1_4ra3w")
+region_enabled = true
+region_rect = Rect2(128, 128, 128, 128)
+script = ExtResource("2_5uy6h")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1614239541]
+offset_left = -155.0
+offset_top = -206.0
+offset_right = -45.466972
+offset_bottom = 173.01465
+size_flags_vertical = 3
+offset_transform_enabled = true
+offset_transform_rotation = 1.5707964
+theme_override_fonts/normal_font = ExtResource("3_c4w8v")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 1
+horizontal_alignment = 1
+vertical_alignment = 1
