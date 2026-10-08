@@ -4,24 +4,33 @@
 [ext_resource type="Script" uid="uid://0wcofa2lun4b" path="res://Scripts/enemy.gd" id="2_5uy6h"]
 [ext_resource type="FontFile" uid="uid://csvq0vsim01d2" path="res://fonts/DotGothic16-Regular.ttf" id="3_c4w8v"]
 
-[node name="Enemy" type="Sprite2D" unique_id=1820329106]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_haqph"]
+size = Vector2(130, 131)
+
+[node name="Enemy" type="CharacterBody2D" unique_id=346281701]
+script = ExtResource("2_5uy6h")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1820329106]
 rotation = -1.5707964
 texture = ExtResource("1_4ra3w")
 region_enabled = true
 region_rect = Rect2(128, 128, 128, 128)
-script = ExtResource("2_5uy6h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=196073767]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_haqph")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1614239541]
-offset_left = -155.0
-offset_top = -206.0
-offset_right = -45.466972
-offset_bottom = 173.01465
+offset_left = -150.0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 200.0
 size_flags_vertical = 3
 offset_transform_enabled = true
-offset_transform_rotation = 1.5707964
 theme_override_fonts/normal_font = ExtResource("3_c4w8v")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
+text = "test"
 fit_content = true
 scroll_active = false
 autowrap_mode = 1

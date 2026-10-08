@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cld78750og8jp" path="res://Scripts/Main.gd" id="1_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://dfa8cdvaqnagj" path="res://art/world_map_bg.png" id="1_o5qli"]
+[ext_resource type="FontFile" uid="uid://csvq0vsim01d2" path="res://fonts/DotGothic16-Regular.ttf" id="3_sugp2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_haqph"]
+size = Vector2(77, 760)
 
 [node name="Main" type="Node2D" unique_id=198978509]
 script = ExtResource("1_jyhfs")
@@ -31,7 +35,92 @@ position = Vector2(1241, 529)
 wait_time = 3.0
 
 [node name="DifficultyTimer" type="Timer" parent="." unique_id=1991087797]
-wait_time = 10.0
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1085977757]
+
+[node name="GameOverScreen" type="PanelContainer" parent="CanvasLayer" unique_id=729745546]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/GameOverScreen" unique_id=1265283010]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameOverScreen/CenterContainer" unique_id=2032665931]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer" unique_id=707524522]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 36
+text = "Game Over!"
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer" unique_id=790284348]
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 36
+text = "Restart"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=573134621]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopRow2" type="CenterContainer" parent="CanvasLayer/VBoxContainer" unique_id=1247038271]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TopRow" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/TopRow2" unique_id=1129720560]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="EnemiesKilledLabel" type="Label" parent="CanvasLayer/VBoxContainer/TopRow2/TopRow" unique_id=1313287780]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 28
+text = "Killed:"
+
+[node name="EnemiesKilledValue" type="Label" parent="CanvasLayer/VBoxContainer/TopRow2/TopRow" unique_id=1886533455]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 28
+text = "0"
+
+[node name="BottomRow" type="HBoxContainer" parent="CanvasLayer/VBoxContainer" unique_id=1548669220]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/BottomRow" unique_id=879116494]
+layout_mode = 2
+
+[node name="DifficultyLabel" type="Label" parent="CanvasLayer/VBoxContainer/BottomRow/HBoxContainer" unique_id=828473763]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 28
+text = "Difficulty:"
+
+[node name="DifficultyValue" type="Label" parent="CanvasLayer/VBoxContainer/BottomRow/HBoxContainer" unique_id=1076331793]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_sugp2")
+theme_override_font_sizes/font_size = 28
+text = "0"
+
+[node name="LoseArea" type="Area2D" parent="." unique_id=778701426]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LoseArea" unique_id=1233450834]
+position = Vector2(-55, 360)
+shape = SubResource("RectangleShape2D_haqph")
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="body_entered" from="LoseArea" to="." method="_on_lose_area_body_entered"]

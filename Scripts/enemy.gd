@@ -1,4 +1,4 @@
-extends Sprite2D
+extends CharacterBody2D
 
 @export var blue: Color = Color("#4682b4")
 @export var green: Color = Color("#639675")
@@ -15,6 +15,13 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	global_position.x -= speed
+
+func set_difficulty(difficulty: int):
+	handle_difficulty_increased(difficulty)
+	
+func handle_difficulty_increased(new_difficulty: int):
+	var new_speed = speed + (0.125 * new_difficulty)
+	speed = clamp(new_speed, speed, 3)
 
 func get_prompt() -> String:
 	return prompt.get_parsed_text()
