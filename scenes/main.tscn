@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cld78750og8jp" path="res://Scripts/Main.gd" id="1_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://dfa8cdvaqnagj" path="res://art/world_map_bg.png" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://copopuae3qvo4" path="res://scenes/enemy_container.gd" id="3_jyhfs"]
 [ext_resource type="FontFile" uid="uid://csvq0vsim01d2" path="res://fonts/DotGothic16-Regular.ttf" id="3_sugp2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_haqph"]
@@ -10,10 +11,21 @@ size = Vector2(77, 760)
 [node name="Main" type="Node2D" unique_id=198978509]
 script = ExtResource("1_jyhfs")
 
+[node name="SpawnTimer" type="Timer" parent="." unique_id=198608987]
+wait_time = 3.0
+
+[node name="DifficultyTimer" type="Timer" parent="." unique_id=1991087797]
+wait_time = 5.0
+autostart = true
+
 [node name="Background" type="TextureRect" parent="." unique_id=958738256]
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("1_o5qli")
+
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=913802812 node_paths=PackedStringArray("spawn_container")]
+script = ExtResource("3_jyhfs")
+spawn_container = NodePath("../SpawnContainer")
 
 [node name="SpawnContainer" type="Node2D" parent="." unique_id=1276308948]
 
@@ -29,13 +41,11 @@ position = Vector2(1242, 362)
 [node name="Marker2D4" type="Marker2D" parent="SpawnContainer" unique_id=120852482]
 position = Vector2(1241, 529)
 
-[node name="EnemyContainer" type="Node2D" parent="." unique_id=913802812]
+[node name="LoseArea" type="Area2D" parent="." unique_id=778701426]
 
-[node name="SpawnTimer" type="Timer" parent="." unique_id=198608987]
-wait_time = 3.0
-
-[node name="DifficultyTimer" type="Timer" parent="." unique_id=1991087797]
-autostart = true
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LoseArea" unique_id=1233450834]
+position = Vector2(-55, 360)
+shape = SubResource("RectangleShape2D_haqph")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1085977757]
 
@@ -114,13 +124,7 @@ theme_override_fonts/font = ExtResource("3_sugp2")
 theme_override_font_sizes/font_size = 28
 text = "0"
 
-[node name="LoseArea" type="Area2D" parent="." unique_id=778701426]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LoseArea" unique_id=1233450834]
-position = Vector2(-55, 360)
-shape = SubResource("RectangleShape2D_haqph")
-
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]
-[connection signal="pressed" from="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="body_entered" from="LoseArea" to="." method="_on_lose_area_body_entered"]
+[connection signal="pressed" from="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]

@@ -1,12 +1,9 @@
 extends Node2D
 
-var Enemy = preload("res://scenes/enemy.tscn")
-
-@onready var spawn_container = $SpawnContainer
 @onready var spawn_timer = $SpawnTimer
+@onready var enemy_container = $EnemyContainer
 @onready var difficulty_timer = $DifficultyTimer
 
-@onready var enemy_container = $EnemyContainer
 @onready var difficulty_value = $CanvasLayer/VBoxContainer/BottomRow/HBoxContainer/DifficultyValue
 @onready var killed_value = $CanvasLayer/VBoxContainer/TopRow2/TopRow/EnemiesKilledValue
 @onready var game_over_screen = $CanvasLayer/GameOverScreen
@@ -20,18 +17,18 @@ var active_enemy = null
 
 func _ready() -> void:
 	start_game()
-	
-func _on_spawn_timer_timeout() -> void:
-	spawn_enemy()
-	
-func spawn_enemy(): 
-	var enemy_instance = Enemy.instantiate()
-	var spawns = spawn_container.get_children()
-	var index = randi() % spawns.size()
-	enemy_instance.global_position = spawns[index].global_position
-	enemy_container.add_child(enemy_instance)
-	enemy_instance.set_difficulty(difficulty)
 
+func _unhandled_input(event: InputEvent) -> void:
+	# only fires when we get input and the key is pressed to prevent held down keystrokes
+	if event is InputEventKey and not event.is_pressed():
+		# use this variable for better autocompletion
+		var typed_event = event as InputEventKey
+		# get the letter the user types
+		var key_typed: String = typed_event.as_text_keycode().to_lower()
+		enemy_container.on_player_typed(key_typed)
+
+func _on_spawn_timer_timeout() -> void:
+	enemy_container.spawn_enemy(difficulty)
 
 func _on_difficulty_timer_timeout() -> void:
 	print("Timer fired!")
@@ -65,7 +62,7 @@ func start_game():
 	randomize()
 	spawn_timer.start()
 	difficulty_timer.start()
-	spawn_enemy()
+	enemy_container.spawn_enemy(difficulty)
 
 func _on_restart_button_pressed() -> void:
 	start_game()
