@@ -4,6 +4,10 @@ extends Node2D
 
 # Tracks enemies in scene to compare to prompts of enemies to what is being typed
 var enemy_map : Dictionary[String, Enemy] = {}
+var phrase_typed: String
+var enemies: Array[Node]
+
+# TODO Is this a bad way to load the enemy?
 const ENEMY = preload("uid://c02w5vdnu21bl")
 
 @export var spawn_container: Node2D 
@@ -11,13 +15,34 @@ const ENEMY = preload("uid://c02w5vdnu21bl")
 func spawn_enemy(difficulty: int): 
 	var enemy_instance = ENEMY.instantiate()
 	var spawns = spawn_container.get_children()
-	var index = randi() % spawns.size()
+	var index: int = randi() % spawns.size()
 	enemy_instance.global_position = spawns[index].global_position
 	add_child(enemy_instance)
 	enemy_map[enemy_instance.prompt_text] = enemy_instance
 	enemy_instance.set_difficulty(difficulty)
+	enemies.append(enemy_instance)
 
-# TODO Logic for figuring out if what the player has typed matches the enemy prompt
-func on_player_typed(character: String):
-	print(character, " ", enemy_map)
-	
+# Logic for figuring out if what the player has typed matches the enemy prompt
+func on_player_typed(key_typed: String):
+	phrase_typed += key_typed
+	# If an enemy exists in the map whose key matches the phrase typed
+	var partially_matched: bool = false
+
+	# For every enemy we want to compare the phrase typed to the enemy_prompt.
+	for enemy_prompt: String in enemy_map:
+		enemy_map[enemy_prompt].find_new_active_enemy(phrase_typed)
+		# check for key typed against enemy_map[enemy_prompt] string and then iterate current_letter_index based on that
+		
+		# If we find a match destroy the enemy.
+		if (phrase_typed == enemy_prompt):
+			# Destroy node after we correctly type input
+			enemy_map[enemy_prompt].destroy()
+			# Erase dictionary after we are done with enemy
+			enemy_map.erase(enemy_prompt)
+		# If we see a partial match, keep looking. enemy prompt starts with what you've typed
+		elif (enemy_prompt.begins_with(phrase_typed)):
+			partially_matched = true
+
+	# If not reset the phrase typed.
+	if not partially_matched:
+		phrase_typed = ""

@@ -18,8 +18,19 @@ var active_enemy = null
 func _ready() -> void:
 	start_game()
 
+func _on_spawn_timer_timeout() -> void:
+	active_enemy = enemy_container.spawn_enemy(difficulty)
+
+func _on_difficulty_timer_timeout() -> void:
+	# TODO Difficulty is set but the signal is declared and won't be used
+	difficulty += 1
+	GlobalSignals.emit_signal("difficulty_increased", difficulty)
+	var new_wait_time = spawn_timer.wait_time - 0.2
+	spawn_timer.wait_time = clamp(new_wait_time, 1, spawn_timer.wait_time)
+	difficulty_value.text = str(difficulty)
+
 func _unhandled_input(event: InputEvent) -> void:
-	# only fires when we get input and the key is pressed to prevent held down keystrokes
+# only fires when we get input and the key is pressed to prevent held down keystrokes
 	if event is InputEventKey and not event.is_pressed():
 		# use this variable for better autocompletion
 		var typed_event = event as InputEventKey
@@ -27,21 +38,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var key_typed: String = typed_event.as_text_keycode().to_lower()
 		enemy_container.on_player_typed(key_typed)
 
-func _on_spawn_timer_timeout() -> void:
-	enemy_container.spawn_enemy(difficulty)
-
-func _on_difficulty_timer_timeout() -> void:
-	print("Timer fired!")
-	# TODO Difficulty is set but the signal is declared and won't be used
-	difficulty += 1
-	GlobalSignals.emit_signal("difficulty_increased", difficulty)
-	print("Difficulty increased to %d" % difficulty)
-	var new_wait_time = spawn_timer.wait_time - 0.2
-	spawn_timer.wait_time = clamp(new_wait_time, 1, spawn_timer.wait_time)
-	difficulty_value.text = str(difficulty)
-
-
-func _on_lose_area_body_entered(body: Node2D) -> void:
+func _on_lose_area_body_entered(_body: Node2D) -> void:
 	game_over()
 	
 func game_over():
