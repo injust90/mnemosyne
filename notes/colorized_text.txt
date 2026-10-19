@@ -4,7 +4,11 @@ a) Investigate the problem
 3) Implement the solution
 
 TODO Log
+-[ ] Kill Count is not iterating
 -[ ] Colors do not match up to the word being typed, only works for first two characters. 
+    Colors are set up for printing, but does not print the correct. Color.
+    Suspicion: find_new_active_enemy is not iterating through the entire string
+    
    Suspicion: next_character is not being set 
    Test: iterate next_character with substring(current_letter_index, current_letter_index + 1)
     Didn't work... likely because next_character is NOT the one setting the color
