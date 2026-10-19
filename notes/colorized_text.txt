@@ -1,0 +1,43 @@
+a) Investigate the problem
+1) Understand the problem
+2) Plan the solution
+3) Implement the solution
+
+TODO Log
+-[ ] Colors do not match up to the word being typed, only works for first two characters. 
+   Suspicion: next_character is not being set 
+   Test: iterate next_character with substring(current_letter_index, current_letter_index + 1)
+    Didn't work... likely because next_character is NOT the one setting the color
+   Figure out why it's printing just the first two characters. then propose the solution.
+   SOLUTION
+    check for key typed and then iterate current_letter_index based on that
+    Do I Create a for loop to address key_typed?
+    Issue is how to get the current_letter_index?
+
+
+
+-[ ]does not reset when the next word is being typed.
+
+-[x] If the player types a previous word, the game crashes.
+
+-[x] If the player types the first word, then the game crashes.
+    E 0:00:07:406   on_player_typed: Attempt to call function 'find_new_active_enemy' in base 'previously freed' on a null instance.
+       My suspicion is that the first instance of enemy_map is still being called upon.
+       Trying to use an object that isn't there anymore
+       Destroys the prompt, then tries to use it again. How to fix?  
+
+    1) Understand the problem
+    - The issues AFAIK is that the enemy correctly finds on the first instance, but then on the second throws a null error.
+    2) Plan the solution
+    - Find out how to assign the next active enemy.
+     Haldedire
+     "because you're iterating over enemy_map - if you free any of those and don't modify enemy_map to reflect that the object is freed - you start calling your function on Freed Object"
+
+-[x] Problem
+    Have the enemy "highlight" the text when the prompt matches the text being selected in the enemy spawner.
+
+Solution
+    Enemy parses the text and "highlights" the text as desired.
+    enemy_container passes the text to the enemy to be parsed. Enemy is a child of enemy_container
+    Enemy has the logic for handling the input, but find_new_active_enemy is never called.
+
