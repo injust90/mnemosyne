@@ -30,7 +30,7 @@ func on_player_typed(key_typed: String):
 
 	# For every enemy we want to compare the phrase typed to the enemy_prompt.
 	for enemy_prompt: String in enemy_map:
-		enemy_map[enemy_prompt].find_new_active_enemy(phrase_typed)
+		enemy_map[enemy_prompt].find_new_active_enemy(phrase_typed, enemy_prompt)
 		# check for key typed against enemy_map[enemy_prompt] string and then iterate current_letter_index based on that
 		
 		# If we find a match destroy the enemy.
