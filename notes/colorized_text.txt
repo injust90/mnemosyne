@@ -6,7 +6,7 @@ a) Investigate the problem
 TODO Log
 -[ ] Kill Count is not iterating
 -[ ] Colors do not match up to the word being typed, only works for first two characters. 
-     Colors are set up for printing, but does not print the correct. Color.
+     Colors are set up for printing, but does not print the correct color.
      find_new_active_enemy is iterating through the entire string, just all at once.
      1) Problem is that the characters do not correctly print the color.
      2) Second issue is now the text is changing when the second string is typed. 
