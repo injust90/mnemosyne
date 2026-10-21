@@ -4,8 +4,23 @@ a) Investigate the problem
 3) Implement the solution
 
 TODO Log
--[ ] Kill Count is not iterating
--[ ] Colors do not match up to the word being typed, only works for first two characters. 
+-[x] Kill Count is not iterating
+-[x] Colors do not match up to the word being typed, only works for first two characters. 
+
+    Problem: Correct input is changing the whole string, only want to print the correct text.
+    Solution: 
+
+    TEXT: Color
+          xx   
+
+    Pass in the enemy_prompt and the current letter to a colorize function to enemy.
+
+    Solution
+    In the enemy_prompt check the text letter by letter to see whether or not it matches the text typed.
+    If it matches, then colorize the text accordingly.
+    Else reset the color back
+
+
      Colors are set up for printing, but does not print the correct color.
      find_new_active_enemy is iterating through the entire string, just all at once.
      1) Problem is that the characters do not correctly print the color.
