@@ -27,15 +27,15 @@ func on_player_typed(key_typed: String):
 	phrase_typed += key_typed
 	# If an enemy exists in the map whose key matches the phrase typed
 	var partially_matched: bool = false
-
+	
 	# For every enemy we want to compare the phrase typed to the enemy_prompt.
 	for enemy_prompt: String in enemy_map:
-		enemy_map[enemy_prompt].find_new_active_enemy(phrase_typed, enemy_prompt)
-		# check for key typed against enemy_map[enemy_prompt] string and then iterate current_letter_index based on that
-		
+		# Colorize text
+		enemy_map[enemy_prompt].colorize(phrase_typed)			
 		# If we find a match destroy the enemy.
 		if (phrase_typed == enemy_prompt):
 			# Destroy node after we correctly type input
+			enemy_map[enemy_prompt].destroyed.connect(get_tree().current_scene.increment_enemies_destroyed)
 			enemy_map[enemy_prompt].destroy()
 			# Erase dictionary after we are done with enemy
 			enemy_map.erase(enemy_prompt)
@@ -46,3 +46,6 @@ func on_player_typed(key_typed: String):
 	# If not reset the phrase typed.
 	if not partially_matched:
 		phrase_typed = ""
+
+func enemy_destroyed()->bool:
+	return true

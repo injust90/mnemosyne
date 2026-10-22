@@ -38,6 +38,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		var key_typed: String = typed_event.as_text_keycode().to_lower()
 		enemy_container.on_player_typed(key_typed)
 
+func increment_enemies_destroyed():
+	enemies_killed += 1
+	killed_value.text = str(enemies_killed)
+
 func _on_lose_area_body_entered(_body: Node2D) -> void:
 	game_over()
 	

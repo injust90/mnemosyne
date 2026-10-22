@@ -2,9 +2,13 @@ extends CharacterBody2D
 
 class_name Enemy
 
+signal destroyed
+
 @export var blue: Color = Color("#4682b4")
 @export var green: Color = Color("#639675")
 @export var red: Color = Color("#a65455")
+@export var black: Color = Color("1b1b1bff")
+@export var yellow:Color = Color("f2d400ff")
 
 @export var speed: float = 0.5
 
@@ -13,7 +17,6 @@ class_name Enemy
 @onready var enemy_container = get_parent()
 
 var active_enemy = null
-var enemies_killed = 0
 var prompt_text: String = ""
 
 func _ready() -> void:
@@ -30,6 +33,18 @@ func handle_difficulty_increased(new_difficulty: int):
 	var new_speed = speed + (0.125 * new_difficulty)
 	speed = clamp(new_speed, speed, 3)
 
+func colorize(phrase_typed: String):
+	var prompt_index = -1
+	var colorized_text: String
+	var uncolorized_text: String = prompt_text
+	if prompt_text.begins_with(phrase_typed):
+		uncolorized_text = prompt_text.substr(phrase_typed.length(), prompt_text.length())		
+		colorized_text = "[color=#" + yellow.to_html(false) + "]" + phrase_typed + "[/color]" 
+		prompt_label.parse_bbcode(set_center_tags(colorized_text + uncolorized_text))
+		print(prompt_text.substr(prompt_index, prompt_index + 1))
+	else:
+		prompt_label.parse_bbcode(set_center_tags(prompt_text))
+
 # Find a new active enemy, set index, set character, return to break out			
 func find_new_active_enemy(typed_character: String, enemy_prompt: String):
 	var current_letter_index = -1
@@ -45,9 +60,6 @@ func find_new_active_enemy(typed_character: String, enemy_prompt: String):
 			active_enemy.set_next_character(current_letter_index, enemy_prompt)		
 			return
 
-func destroy():
-	queue_free()
-
 func set_next_character(next_character_index: int, enemy_prompt: String):
 	# Building up a ton of strings, will optimize later if needed
 	var blue_text = get_bbcode_color_tag(blue) + enemy_prompt.substr(0, next_character_index) + get_bbcode_end_color_tag()
@@ -61,7 +73,11 @@ func set_next_character(next_character_index: int, enemy_prompt: String):
 		
 	# build out the string
 	prompt_label.parse_bbcode(set_center_tags(blue_text + green_text + red_text))
-		
+
+func destroy():
+	destroyed.emit()
+	queue_free()	
+	
 func set_center_tags(string_to_center: String):
 	return "[center]" + string_to_center + "[/center]"
 
