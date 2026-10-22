@@ -4,6 +4,8 @@ a) Investigate the problem
 3) Implement the solution
 
 TODO Log
+-[x] Game crashes when game is over
+-[ ] Press about 5 times to reset the phrase_typed
 -[x] Kill Count is not iterating
 -[x] Colors do not match up to the word being typed, only works for first two characters. 
 
