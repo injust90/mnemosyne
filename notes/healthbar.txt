@@ -1,0 +1,61 @@
+Healthbar Notes
+
+Two progress bar nodes stack on each other
+Top indicates health
+Bottom damage indicator, only changes after a delay with a timer everytime health is reduced.
+
+Node progress bar. Disable show percentage.
+
+Colors: Theme Overrides. NewStyleBox empty background still. Fill: StyleBox flat
+Ordering: Z-index 1 to put it in front of damage indicator
+
+Name it DamageBar
+Full rect anchor preset
+-> go to inspector set damage higher to see the bar
+Set margins to 1 pixel
+Fill stylebox flat
+Z-index to -1
+
+Make timer child of healthbar
+    Set wait time to liking (0.4)
+
+healthbar.gd
+
+@onread var timer = $Timer
+@onready var damage_bar = $DamageBar
+
+vr health = 0 : set = _set_health
+
+var health = 0
+
+func _set_health(new_health):
+    var prev_health = health
+    health = min(max_value, new_health)
+    value = health
+
+    if health <= 0:
+        queue_free()
+    
+    if health < prev_health:
+        timer.start()
+    else:
+        damage_bar.value = health
+
+    healthbar.health = health
+
+func init_health(_health):
+    health= _health
+    max_value = health
+    value = health
+    damage_bar.max_value = health
+    damage_bar.value = health
+
+func _on_timer_timeout():
+    damage_bar.value = health
+
+connect timers signal timeout
+
+add health bar scene
+
+func _ready():
+    healthbar.init_health(health)
