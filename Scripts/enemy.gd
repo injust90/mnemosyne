@@ -34,14 +34,12 @@ func handle_difficulty_increased(new_difficulty: int):
 	speed = clamp(new_speed, speed, 3)
 
 func colorize(phrase_typed: String):
-	var prompt_index = -1
 	var colorized_text: String
 	var uncolorized_text: String = prompt_text
 	if prompt_text.begins_with(phrase_typed):
 		uncolorized_text = prompt_text.substr(phrase_typed.length(), prompt_text.length())		
 		colorized_text = "[color=#" + yellow.to_html(false) + "]" + phrase_typed + "[/color]" 
 		prompt_label.parse_bbcode(set_center_tags(colorized_text + uncolorized_text))
-		print(prompt_text.substr(prompt_index, prompt_index + 1))
 	else:
 		prompt_label.parse_bbcode(set_center_tags(prompt_text))
 
@@ -63,7 +61,7 @@ func find_new_active_enemy(typed_character: String, enemy_prompt: String):
 func set_next_character(next_character_index: int, enemy_prompt: String):
 	# Building up a ton of strings, will optimize later if needed
 	var blue_text = get_bbcode_color_tag(blue) + enemy_prompt.substr(0, next_character_index) + get_bbcode_end_color_tag()
-	print("enemy_prompt.substr(0, next_character_index) " + enemy_prompt.substr(0, next_character_index))
+	#print("enemy_prompt.substr(0, next_character_index) " + enemy_prompt.substr(0, next_character_index))
 	var green_text = get_bbcode_color_tag(green) + enemy_prompt.substr(next_character_index, 1) + get_bbcode_end_color_tag()
 	#print("enemy_prompt.substr(next_character_index, 1) " + enemy_prompt.substr(next_character_index, 1))
 	var red_text = ""

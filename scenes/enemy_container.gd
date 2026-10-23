@@ -5,9 +5,7 @@ extends Node2D
 # Tracks enemies in scene to compare to prompts of enemies to what is being typed
 var enemy_map : Dictionary[String, Enemy] = {}
 var phrase_typed: String
-var enemies: Array[Node]
 
-# TODO Is this a bad way to load the enemy?
 const ENEMY = preload("uid://c02w5vdnu21bl")
 
 @export var spawn_container: Node2D 
@@ -20,11 +18,11 @@ func spawn_enemy(difficulty: int):
 	add_child(enemy_instance)
 	enemy_map[enemy_instance.prompt_text] = enemy_instance
 	enemy_instance.set_difficulty(difficulty)
-	enemies.append(enemy_instance)
 
 # Logic for figuring out if what the player has typed matches the enemy prompt
 func on_player_typed(key_typed: String):
 	phrase_typed += key_typed
+	print(phrase_typed)
 	# If an enemy exists in the map whose key matches the phrase typed
 	var partially_matched: bool = false
 	
@@ -46,6 +44,3 @@ func on_player_typed(key_typed: String):
 	# If not reset the phrase typed.
 	if not partially_matched:
 		phrase_typed = ""
-
-func enemy_destroyed()->bool:
-	return true

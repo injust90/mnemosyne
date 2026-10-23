@@ -8,9 +8,7 @@ extends Node2D
 @onready var killed_value = $CanvasLayer/VBoxContainer/TopRow2/TopRow/EnemiesKilledValue
 @onready var game_over_screen = $CanvasLayer/GameOverScreen
 
-# var to "lock in" to the desired enemy
-var current_letter_index: int = -1
-
+var main_scene = preload("res://scenes/main.tscn")
 var difficulty: int = 1
 var enemies_killed = 0
 var active_enemy = null
@@ -50,9 +48,9 @@ func game_over():
 	spawn_timer.stop()
 	difficulty_timer.stop()
 	active_enemy = null
-	current_letter_index = -1
 	for enemy in enemy_container.get_children():
 		enemy.queue_free()
+	#enemy_container.set_phrase_typed()
 
 func start_game():
 	game_over_screen.hide()
@@ -66,4 +64,5 @@ func start_game():
 	enemy_container.spawn_enemy(difficulty)
 
 func _on_restart_button_pressed() -> void:
-	start_game()
+	#start_game()
+	get_tree().change_scene_to_packed(main_scene)
