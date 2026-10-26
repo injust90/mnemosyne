@@ -1,0 +1,3 @@
+-[ ] phrase_typed concatenates the first two letters you want to type on the next phrase
+
+David: Add a separate loop that only runs when no match is found that checks if the last character typed matches instead of the whole phrase
